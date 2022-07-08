@@ -19,6 +19,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     @livewireStyles
     @stack('css')
+    <style>
+        .header-logo{
+            height: 25px;
+            margin-right: 10px;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-200">
@@ -30,9 +36,9 @@
                     class="navbar navbar-expand-lg blur border-radius-xl top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
                     <div class="container-fluid ps-2 pe-0">
                         <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="#">
-                            Siomay Mas Nur Manajemen Sistem
+                            <img src="{{ $web_config ? asset($web_config['web_logo']) : asset('assets/images/logo/masnur.png') }}" alt="" class="header-logo"> Siomay Mas Nur Manajemen Sistem
                         </a>
-                        <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
+                        <button class="d-none navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
                             aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon mt-2">
@@ -61,9 +67,7 @@
                                 © <script>
                                     document.write(new Date().getFullYear())
                                 </script>,
-                                made with <i class="fa fa-heart" aria-hidden="true"></i> by
-                                <a href="#" class="font-weight-bold text-white" target="_blank">Creative Tim Gazwah</a>
-                                for a better system.
+                                siomaymasnur.com
                             </div>
                         </div>
                     </div>
