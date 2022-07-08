@@ -29,6 +29,12 @@ Route::get('/storage-link', function () {
     Artisan::call('storage:link');
 });
 
+Route::get('/link', function () {
+    $target = '/home/u1692892/public_html/storage/app/public';
+    $shortcut = '/home/u1692892/public_html/public/storage';
+    symlink($target, $shortcut);
+});
+
 Route::get('/postAdministrator', function () {
     $user = new User();
     $user->name = 'administrator';
