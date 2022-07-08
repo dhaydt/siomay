@@ -12,7 +12,7 @@
         </div>
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
             <a href="index.html" class="d-lg-none">
-                <img alt="Logo" src="{{ asset('assets/images/logo/kapolri.png') }}" class="h-30px" />
+                <img alt="Logo" src="{{ $web_config ? asset($web_config['web_logo']) : asset('assets/images/logo/masnur.png') }}" class="h-30px" />
             </a>
         </div>
         <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
