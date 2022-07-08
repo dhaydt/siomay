@@ -206,7 +206,7 @@
                     </div>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link @if($active == " Pengaturan Website") active @endif"
+                    <a class="menu-link @if($active == "Pengaturan Website") active @endif"
                         href="{{ route('config') }}">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
