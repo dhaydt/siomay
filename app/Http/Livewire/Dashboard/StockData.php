@@ -48,12 +48,14 @@ class StockData extends Component
 
     public function render()
     {
-        $this->gudang = StockRequestDetails::with('cabangs', 'products', 'stockRequests')->whereHas('cabangs', function ($q) {
+        $this->gudang = StockRequest::with('cabangs', 'requestDetails')->whereHas('cabangs', function ($q) {
             $q->where('name', 'LIKE', '%'.$this->search.'%')
                     ->orWhere('address', 'LIKE', '%'.$this->search.'%');
-        })->orWhereHas('products', function ($p) {
-            $p->where('name', 'LIKE', '%'.$this->search.'%');
-        })->orWhere('request_id', 'LIKE', '%'.$this->search.'%')->orderBy('cabang_id', 'ASC')->paginate($this->total_show);
+        })->orWhereHas('requestDetails', function ($p) {
+            $p->whereHas('products', function ($pro) {
+                $pro->where('name', 'LIKE', '%'.$this->search.'%');
+            });
+        })->orWhere('id', 'LIKE', '%'.$this->search.'%')->orderBy('cabang_id', 'ASC')->paginate($this->total_show);
 
         $data['gudang'] = $this->gudang;
 

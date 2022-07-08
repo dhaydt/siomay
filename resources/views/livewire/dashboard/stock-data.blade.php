@@ -40,10 +40,7 @@
                                 ID Pengajuan
                             </th>
                             <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">
-                                Produk
-                            </th>
-                            <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">
-                                Jumlah
+                                Produk : Jumlah
                             </th>
                             <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">
                                 Status
@@ -59,17 +56,22 @@
                         <tr>
                             <td class="align-middle text-center">{{ ($page - 1) * $total_show + $i +1 }}</td>
                             <td class="align-middle text-center text-capitalize">{{ $item->cabangs->name}}</td>
-                            <td class="align-middle text-center text-capitalize">{{ $item->request_id}}</td>
+                            <td class="align-middle text-center text-capitalize">{{ $item->id}}</td>
                             <td class="align-middle text-center text-capitalize">
-                                {{ $item->products->name }}
+                                @foreach ($item->requestDetails as $stok)
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="badge badge-primary">{{ $stok->products->name }}</span>
+                                    <strong>: {{ $stok->qty }}</strong>
+                                </div>
+                                @endforeach
                             </td>
-                            <td class="align-middle text-center">{{ $item->qty}}</td>
+                            <td class="align-middle text-center"></td>
                             <td class="align-middle text-center text-capitalize">
-                                @if ($item->stockRequests->status == "menunggu")
+                                @if ($item->status == "menunggu")
                                     <span class="badge badge-warning">menunggu</span>
-                                @elseif($item->stockRequests->status == 'dikirim')
+                                @elseif($item->status == 'dikirim')
                                     <span class="badge badge-info">dikirim</span>
-                                @elseif($item->stockRequests->status == "diterima")
+                                @elseif($item->status == "diterima")
                                     <span class="badge badge-success">diterima</span>
                                 @endif
                             </td>
