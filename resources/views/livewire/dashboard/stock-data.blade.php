@@ -28,7 +28,7 @@
             </div>
 
             <div class="table-responsive">
-                <table id="id" class="table align-items-center mb-0">
+                <table id="id" class="table table-hover table-rounded table-striped border gy-7 gs-7 align-items-center mb-0">
                     <thead>
                         <tr>
                             <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">No
@@ -39,8 +39,8 @@
                             <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">
                                 ID Pengajuan
                             </th>
-                            <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">
-                                Produk : Jumlah
+                            <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center d-flex justify-content-between">
+                                <span>Produk</span> <strong>: Jumlah</strong>
                             </th>
                             <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">
                                 Status
@@ -63,6 +63,7 @@
                                     <span class="badge badge-primary">{{ $stok->products->name }}</span>
                                     <strong>: {{ $stok->qty }}</strong>
                                 </div>
+                            <hr>
                                 @endforeach
                             </td>
                             <td class="align-middle text-center"></td>
