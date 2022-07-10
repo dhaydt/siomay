@@ -28,7 +28,8 @@
             </div>
 
             <div class="table-responsive">
-                <table id="id" class="table table-hover table-rounded table-striped border gy-7 gs-7 align-items-center mb-0">
+                <table id="id"
+                    class="table table-hover table-rounded table-striped border gy-7 gs-7 align-items-center mb-0">
                     <thead>
                         <tr>
                             <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">No
@@ -39,7 +40,8 @@
                             <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">
                                 ID Pengajuan
                             </th>
-                            <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center d-flex justify-content-between">
+                            <th
+                                class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center d-flex justify-content-between">
                                 <span>Produk</span> <strong>: Jumlah</strong>
                             </th>
                             <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">
@@ -63,17 +65,16 @@
                                     <span class="badge badge-primary">{{ $stok->products->name }}</span>
                                     <strong>: {{ $stok->qty }}</strong>
                                 </div>
-                            <hr>
+                                <hr>
                                 @endforeach
                             </td>
-                            <td class="align-middle text-center"></td>
                             <td class="align-middle text-center text-capitalize">
                                 @if ($item->status == "menunggu")
-                                    <span class="badge badge-warning">menunggu</span>
+                                <span class="badge badge-warning">menunggu</span>
                                 @elseif($item->status == 'dikirim')
-                                    <span class="badge badge-info">dikirim</span>
+                                <span class="badge badge-info">dikirim</span>
                                 @elseif($item->status == "diterima")
-                                    <span class="badge badge-success">diterima</span>
+                                <span class="badge badge-success">diterima</span>
                                 @endif
                             </td>
                             <td class="align-middle text-center">
@@ -83,7 +84,7 @@
                                         data-bs-toggle="tooltip" data-bs-placement="top"
                                         title="Ubah data {{ $item->name }}"><i
                                             class="fas fa-edit text-light"></i></button>
-                                    <button type="button" wire:click.prevent="$emit('onClickDelete', {{ $item->id }})"
+                                    <button type="button" wire:click.prevent="$emit('onClickDelete', `{{ $item->id }}`)"
                                         class="btn btn-sm bg-danger btn-hover-rotate-end" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Hapus data {{ $item->name }}"><i
                                             class="fas fa-trash text-light"></i></button>
@@ -148,48 +149,56 @@
                             @enderror
                         </div>
                         @php
-                            $color = [
-                                'success', 'info', 'warning', 'danger'
-                            ];
+                        $color = [
+                        'success', 'info', 'warning', 'danger'
+                        ];
                         @endphp
                         <div class="mb-10">
                             <label for="hakAkses" class="required form-label">Produk</label>
-                        @foreach ($produk as $key => $i)
-                        <div class="d-flex align-items-center mb-8">
-                            <!--begin::Bullet-->
-                            <span class="bullet bullet-vertical h-40px bg-{{ $color[$key] }}"></span>
-                            <!--end::Bullet-->
-                            <!--begin::Checkbox-->
-                            <div class="form-check form-check-custom form-check-solid mx-5">
-                                <input class="form-check-input" type="checkbox" value="{{ $i->id }}" wire:model="listProduk">
-                            </div>
-                            <!--end::Checkbox-->
-                            <!--begin::Description-->
-                            <div class="flex-grow-1">
-                                <a href="javascript:" class="text-gray-800 text-hover-primary fw-bold fs-6 text-capitalize">{{ $i->name }}</a>
-                            </div>
-                            <!--end::Description-->
-                            <div class="flex-grow-1">
-                                <div class="input-group input-group-sm justify-content-end">
-                                    <span class="input-group-text" id="inputGroup-sizing-sm">Qty</span>
-                                    <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" wire:model="listQty.{{ $i->id }}" id="{{ $i->id }}" @if(!in_array($i->id,$listProduk)) disabled @endif style="max-width: 150px;"/>
+                            @foreach ($produk as $key => $i)
+                            <div class="d-flex align-items-center mb-8">
+                                <!--begin::Bullet-->
+                                <span class="bullet bullet-vertical h-40px bg-{{ $color[$key] }}"></span>
+                                <!--end::Bullet-->
+                                <!--begin::Checkbox-->
+                                <div class="form-check form-check-custom form-check-solid mx-5">
+                                    <input class="form-check-input" type="checkbox" value="{{ $i->id }}"
+                                        wire:model="listProduk">
+                                </div>
+                                <!--end::Checkbox-->
+                                <!--begin::Description-->
+                                <div class="flex-grow-1">
+                                    <a href="javascript:"
+                                        class="text-gray-800 text-hover-primary fw-bold fs-6 text-capitalize">{{
+                                        $i->name }}</a>
+                                </div>
+                                <!--end::Description-->
+                                <div class="flex-grow-1">
+                                    <div class="input-group input-group-sm justify-content-end">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm">Qty</span>
+                                        <input type="number" class="form-control" aria-label="Sizing example input"
+                                            aria-describedby="inputGroup-sizing-sm" wire:model="listQty.{{ $i->id }}"
+                                            id="{{ $i->id }}" @if(!in_array($i->id,$listProduk)) disabled @endif
+                                        style="max-width: 150px;"/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        @endforeach
-                        @error('listProduk')
+                            @endforeach
+                            @error('listProduk')
                             <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
+                            @enderror
+                        </div>
 
                         {{-- <div class="mb-10">
                             <label for="hakAkses" class="required form-label">Produk</label>
                             @foreach($produk as $i)
                             <div class="mt-1">
                                 <label class="inline-flex items-center">
-                                    <input type="checkbox" value="{{ $i->id }}" wire:model="listProduk" class="form-checkbox h-6 w-6 text-green-500">
+                                    <input type="checkbox" value="{{ $i->id }}" wire:model="listProduk"
+                                        class="form-checkbox h-6 w-6 text-green-500">
                                     <span class="ml-3 text-sm">{{ $i->name }}</span>
-                                    <input type="number" wire:model="listQty.{{ $i->id }}" id="{{ $i->id }}" @if(!in_array($i->id,$listProduk)) disabled @endif>
+                                    <input type="number" wire:model="listQty.{{ $i->id }}" id="{{ $i->id }}"
+                                        @if(!in_array($i->id,$listProduk)) disabled @endif>
                                 </label>
                             </div>
                             @endforeach
@@ -245,6 +254,10 @@
                     <input type="hidden" wire:mode="gudang_id">
                     <div class="modal-body">
                         <div class="mb-10">
+                            <label for="" class="form-label">No Permintaan</label>
+                            <input type="text" class="form-control" disabled wire:model="gudang_id">
+                        </div>
+                        <div class="mb-10">
                             <label for="cabang" class="required form-label">Stock Gudang</label>
                             <select id="cabang" class="form-select" aria-label="Select example" wire:model="cabang_id">
                                 <option value="">-- Pilih Cabang --</option>
@@ -258,20 +271,48 @@
                         </div>
                         <div class="mb-10">
                             <label for="hakAkses" class="required form-label">Produk</label>
-                            <select id="hakAkses" class="form-select" aria-label="Select example" wire:model="item_id">
-                                <option value="">-- Pilih Produk --</option>
-                                @foreach ($produk as $s)
-                                <option value="{{ $s->id }}" class="text-capitalize">{{ $s->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('item_id')
+                            @foreach ($produk as $key => $i)
+                            <div class="d-flex align-items-center mb-8">
+                                <!--begin::Bullet-->
+                                <span class="bullet bullet-vertical h-40px bg-{{ $color[$key] }}"></span>
+                                <!--end::Bullet-->
+                                <!--begin::Checkbox-->
+                                <div class="form-check form-check-custom form-check-solid mx-5">
+                                    <input class="form-check-input" type="checkbox" value="{{ $i->id }}"
+                                        wire:model="listProduk">
+                                </div>
+                                <!--end::Checkbox-->
+                                <!--begin::Description-->
+                                <div class="flex-grow-1">
+                                    <a href="javascript:"
+                                        class="text-gray-800 text-hover-primary fw-bold fs-6 text-capitalize">{{
+                                        $i->name }}</a>
+                                </div>
+                                <!--end::Description-->
+                                <div class="flex-grow-1">
+                                    <div class="input-group input-group-sm justify-content-end">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm">Qty</span>
+                                        <input type="number" class="form-control" aria-label="Sizing example input"
+                                            aria-describedby="inputGroup-sizing-sm" wire:model="listQty.{{ $i->id }}"
+                                            id="{{ $i->id }}" @if(!in_array($i->id,$listProduk)) disabled @endif
+                                        style="max-width: 150px;"/>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                            @error('listProduk')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
                         <div class="mb-10">
-                            <label for="exampleFormControlInput1" class="required form-label">Jumlah Produk</label>
-                            <input type="number" class="form-control form-control-solid" wire:model="qty">
-                            @error('qty')
+                            <label for="cabang" class="required form-label">Status permintaan</label>
+                            <select id="cabang" class="form-select" aria-label="Select example" wire:model="status">
+                                <option value="">-- Pilih Status --</option>
+                                <option value="menunggu" class="text-capitalize">Menunggu</option>
+                                <option value="dikirim" class="text-capitalize">Dikirim</option>
+                                <option value="diterima" class="text-capitalize">diterima</option>
+                            </select>
+                            @error('cabang_id')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
@@ -313,7 +354,15 @@
             @this.set('gudang_id', item.id)
             @this.set('cabang_id', item.cabang_id)
             @this.set('item_id', item.item_id)
-            @this.set('qty', item.qty)
+            @this.set('status', item.status)
+            var request = item.request_details
+            var items = [];
+            request.forEach((rd)=> {
+                items.push(rd.item_id)
+                @this.set('listQty.'+rd.item_id, rd.qty)
+            } )
+            @this.set('listProduk', items);
+            console.log('for', item)
 
             $('#modal_update').modal('show')
         })
