@@ -26,11 +26,14 @@ class StockData extends Component
     public $cabang_id;
     public $item_id;
     public $produk;
-    public $status;
+    public $statusBarang;
     public $cabang;
     public $qty;
     public $listQty = [];
     public $listProduk = [];
+    public $status;
+
+    protected $queryString = ['status'];
 
     protected $rules = [
         'cabang_id' => 'required',
@@ -40,25 +43,33 @@ class StockData extends Component
     protected $rulesUpdate = [
         'cabang_id' => 'required',
         'listProduk' => 'required',
-        'status' => 'required',
+        'statusBarang' => 'required',
     ];
 
     protected $messages = [
         'cabang_id.required' => 'Pilih cabang yang ingin mengajukan permintaan!',
         'listProduk.required' => 'Pilih produk yang ingin diajukan!',
-        'status.required' => 'Pilih status pengajuan!',
+        'statusBarang.required' => 'Pilih status pengajuan!',
     ];
 
     public function render()
     {
-        $this->gudang = StockRequest::with('cabangs', 'requestDetails')->whereHas('cabangs', function ($q) {
-            $q->where('name', 'LIKE', '%'.$this->search.'%')
-                    ->orWhere('address', 'LIKE', '%'.$this->search.'%');
-        })->orWhereHas('requestDetails', function ($p) {
-            $p->whereHas('products', function ($pro) {
-                $pro->where('name', 'LIKE', '%'.$this->search.'%');
-            });
-        })->orWhere('id', 'LIKE', '%'.$this->search.'%')->orderBy('created_at', 'DESC')->paginate($this->total_show);
+        if ($this->status == 'menunggu') {
+            $this->gudang = StockRequest::with('cabangs', 'requestDetails')->where('status', 'menunggu')->whereHas('cabangs', function ($q) {
+                $q->where('name', 'LIKE', '%'.$this->search.'%')
+                            ->orWhere('address', 'LIKE', '%'.$this->search.'%');
+            })->paginate($this->total_show);
+        } elseif ($this->status == 'dikirim') {
+            $this->gudang = StockRequest::with('cabangs', 'requestDetails')->where('status', 'dikirim')->whereHas('cabangs', function ($q) {
+                $q->where('name', 'LIKE', '%'.$this->search.'%')
+                            ->orWhere('address', 'LIKE', '%'.$this->search.'%');
+            })->paginate($this->total_show);
+        } elseif ($this->status == 'diterima') {
+            $this->gudang = StockRequest::with('cabangs', 'requestDetails')->where('status', 'diterima')->whereHas('cabangs', function ($q) {
+                $q->where('name', 'LIKE', '%'.$this->search.'%')
+                            ->orWhere('address', 'LIKE', '%'.$this->search.'%');
+            })->paginate($this->total_show);
+        }
 
         $data['gudang'] = $this->gudang;
 
@@ -116,7 +127,7 @@ class StockData extends Component
         }
 
         $gudang->cabang_id = $this->cabang_id;
-        $gudang->status = $this->status;
+        $gudang->status = $this->statusBarang;
         $gudang->save();
 
         $details = StockRequestDetails::where('request_id', $gudang->id)->get();

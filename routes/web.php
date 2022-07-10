@@ -64,7 +64,7 @@ Route::prefix('dashboard')->middleware('admin')->group(function () {
     });
 
     Route::get('cabang', [CabangController::class, 'index'])->name('cabang');
-    Route::get('gudang', [GudangController::class, 'index'])->name('gudang');
+    Route::get('gudang/{status}', [GudangController::class, 'index'])->name('gudang');
     Route::get('produk', [ItemController::class, 'index'])->name('produk');
-    Route::get('pengajuan', [GudangController::class, 'pengajuan_stock'])->name('pengajuan_stock');
+    Route::get('pengajuan/{status}', [GudangController::class, 'pengajuan_stock'])->name('pengajuan_stock');
 });

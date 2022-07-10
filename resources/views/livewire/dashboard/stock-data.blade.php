@@ -306,7 +306,7 @@
                         </div>
                         <div class="mb-10">
                             <label for="cabang" class="required form-label">Status permintaan</label>
-                            <select id="cabang" class="form-select" aria-label="Select example" wire:model="status">
+                            <select id="cabang" class="form-select" aria-label="Select example" wire:model="statusBarang">
                                 <option value="">-- Pilih Status --</option>
                                 <option value="menunggu" class="text-capitalize">Menunggu</option>
                                 <option value="dikirim" class="text-capitalize">Dikirim</option>
@@ -354,7 +354,7 @@
             @this.set('gudang_id', item.id)
             @this.set('cabang_id', item.cabang_id)
             @this.set('item_id', item.item_id)
-            @this.set('status', item.status)
+            @this.set('statusBarang', item.status)
             var request = item.request_details
             var items = [];
             request.forEach((rd)=> {

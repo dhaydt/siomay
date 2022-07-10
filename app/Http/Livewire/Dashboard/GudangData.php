@@ -25,6 +25,9 @@ class GudangData extends Component
     public $cabang_id;
     public $log_id;
     public $qty;
+    public $status;
+
+    protected $queryString = ['status'];
 
     protected $rules = [
         'cabang_id' => 'required|string',
@@ -46,12 +49,20 @@ class GudangData extends Component
 
     public function render()
     {
-        $this->gudang = stock::with('cabangs', 'logs', 'items')->whereHas('cabangs', function ($q) {
-            $q->where('name', 'LIKE', '%'.$this->search.'%')
+        if ($this->status == 'pusat') {
+            $this->gudang = stock::with('cabangs', 'logs', 'items')->where('cabang_id', 'SMN1000')->orderBy('updated_at', 'DESC')->paginate($this->total_show);
+        }
+
+        if ($this->status == 'cabang') {
+            if ($this->search) {
+                $this->gudang = stock::with('cabangs', 'logs', 'items')->where('cabang_id', '<>', 'SMN1000')->whereHas('cabangs', function ($q) {
+                    $q->where('name', 'LIKE', '%'.$this->search.'%')
                     ->orWhere('address', 'LIKE', '%'.$this->search.'%');
-        })->orWhereHas('items', function ($c) {
-            $c->where('name', 'LIKE', '%'.$this->search.'%');
-        })->orderBy('cabang_id', 'ASC')->paginate($this->total_show);
+                })->orderBy('cabang_id', 'ASC')->paginate($this->total_show);
+            } else {
+                $this->gudang = stock::with('cabangs', 'logs', 'items')->where('cabang_id', '<>', 'SMN1000')->orderBy('updated_at', 'DESC')->paginate($this->total_show);
+            }
+        }
 
         $data['gudang'] = $this->gudang;
 

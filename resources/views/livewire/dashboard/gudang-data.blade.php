@@ -16,7 +16,9 @@
             @include('livewire.helper.alert-session')
             <div class="row justify-content-between">
                 <div class="mb-4 input-group input-group-outline w-md-25 w-50">
+                    @if ($status !== 'pusat')
                     <input type="text" class="form-control" placeholder="Search..." wire:model="search">
+                    @endif
                 </div>
 
                 <div class="col-md-6 text-end">
