@@ -79,11 +79,18 @@
                             </td>
                             <td class="align-middle text-center">
                                 <div class="btn-group btn-group-sm" role="group">
-                                    <button type="button" wire:click.prevent="$emit('onClickUpdate', {{ $item }})"
-                                        class="btn btn-sm bg-success text-white btn-hover-rotate-start"
+                                    @if (session()->get('role') == 1)
+                                        <button type="button" wire:click.prevent="$emit('onClickUpdate', {{ $item }})"
+                                            class="btn btn-sm bg-success text-white btn-hover-rotate-start"
+                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Ubah data {{ $item->name }}"><i
+                                            class="fas fa-edit text-light"></i>
+                                        </button>
+                                    @endif
+                                    <button type="button" wire:click.prevent="$emit('onClickChange', {{ $item }})"
+                                        class="btn btn-sm bg-primary text-white btn-hover-rise"
                                         data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Ubah data {{ $item->name }}"><i
-                                            class="fas fa-edit text-light"></i></button>
+                                        title="Ubah status"><i class="fas fa-exclamation-triangle text-light"></i></button>
                                     <button type="button" wire:click.prevent="$emit('onClickDelete', `{{ $item->id }}`)"
                                         class="btn btn-sm bg-danger btn-hover-rotate-end" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Hapus data {{ $item->name }}"><i
@@ -265,7 +272,7 @@
                                 </div>
                             </div>
                             @endforeach
-                            @error('listProduk')
+                            @error('listQty')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
@@ -277,7 +284,53 @@
                                 <option value="dikirim" class="text-capitalize">Dikirim</option>
                                 <option value="diterima" class="text-capitalize">diterima</option>
                             </select>
-                            @error('cabang_id')
+                            @error('statusBarang')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
+                        <button type="submit" class="btn btn-primary">Ubah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal Change -->
+    <div wire:ignore.self class="modal fade" tabindex="-1" id="modal_change" data-bs-backdrop="static"
+        data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ubah Status Permintaan</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <span class="svg-icon svg-icon-2x"></span>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form wire:submit.prevent="change" id="form_change">
+                    <input type="hidden" wire:mode="gudang_id">
+                    <div class="modal-body">
+                        <div class="mb-10">
+                            <label for="" class="form-label">No Permintaan</label>
+                            <input type="text" class="form-control" disabled wire:model="gudang_id">
+                        </div>
+                        <div class="mb-10">
+                            <label for="cabang" class="required form-label">Status permintaan</label>
+                            <select id="cabang" class="form-select" aria-label="Select example" wire:model="statusBarang">
+                                <option value="">-- Pilih Status --</option>
+                                <option value="menunggu" class="text-capitalize">Menunggu</option>
+                                <option value="dikirim" class="text-capitalize">Dikirim</option>
+                                <option value="diterima" class="text-capitalize">diterima</option>
+                            </select>
+                            @error('statusBarang')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
@@ -313,6 +366,7 @@
         Livewire.on('refresh', () => {
             $('#modal_update').modal('hide')
             $('#modal_add').modal('hide')
+            $('#modal_change').modal('hide')
         })
 
         Livewire.on('onClickUpdate', (item) => {
@@ -330,6 +384,13 @@
             console.log('for', item)
 
             $('#modal_update').modal('show')
+        })
+
+        Livewire.on('onClickChange', (item) => {
+            @this.set('gudang_id', item.id)
+            @this.set('statusBarang', item.status)
+
+            $('#modal_change').modal('show')
         })
 
         Livewire.on('onClickDelete', async (id) => {

@@ -16,7 +16,7 @@ class StockData extends Component
     use WithPagination;
 
     public $paginationTheme = 'bootstrap';
-    public $listeners = ['save', 'update', 'delete', 'addListProduk'];
+    public $listeners = ['save', 'update', 'delete', 'addListProduk', 'change'];
     protected $gudang;
 
     public $search;
@@ -43,6 +43,10 @@ class StockData extends Component
     protected $rulesUpdate = [
         'cabang_id' => 'required',
         'listProduk' => 'required',
+        'statusBarang' => 'required',
+    ];
+
+    protected $rulesChange = [
         'statusBarang' => 'required',
     ];
 
@@ -115,13 +119,32 @@ class StockData extends Component
         $this->resetInput();
         $this->emit('refresh');
 
-        return session()->flash('success', 'Berhasil menambah data karyawan');
+        return session()->flash('success', 'Berhasil menambah data permintaan');
+    }
+
+    public function change()
+    {
+        $this->validate($this->rulesChange, $this->messages);
+        $gudang = StockRequest::find($this->gudang_id);
+        if (!$gudang) {
+            return session()->flash('fail', 'Cabang tidak ditemukan');
+        }
+
+        $gudang->status = $this->statusBarang;
+
+        $gudang->save();
+
+        $this->resetInput();
+        $this->emit('refresh');
+
+        return session()->flash('success', 'Berhasil mengubah status permintaan!');
     }
 
     public function update()
     {
         $this->validate($this->rulesUpdate, $this->messages);
         $gudang = StockRequest::find($this->gudang_id);
+        dd($gudang);
         if (!$gudang) {
             return session()->flash('fail', 'Data permintaan tidak ditemukan');
         }
