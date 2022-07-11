@@ -188,41 +188,6 @@
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-
-                        {{-- <div class="mb-10">
-                            <label for="hakAkses" class="required form-label">Produk</label>
-                            @foreach($produk as $i)
-                            <div class="mt-1">
-                                <label class="inline-flex items-center">
-                                    <input type="checkbox" value="{{ $i->id }}" wire:model="listProduk"
-                                        class="form-checkbox h-6 w-6 text-green-500">
-                                    <span class="ml-3 text-sm">{{ $i->name }}</span>
-                                    <input type="number" wire:model="listQty.{{ $i->id }}" id="{{ $i->id }}"
-                                        @if(!in_array($i->id,$listProduk)) disabled @endif>
-                                </label>
-                            </div>
-                            @endforeach
-
-                        </div> --}}
-                        {{-- <div class="mb-10">
-                            <label for="hakAkses" class="required form-label">Produk</label>
-                            <select id="hakAkses" class="form-select" aria-label="Select example" wire:model="item_id">
-                                <option value="">-- Pilih Produk --</option>
-                                @foreach ($produk as $i)
-                                <option value="{{ $i->id }}" class="text-capitalize">{{ $i->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('item_id')
-                            <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div> --}}
-                        {{-- <div class="mb-10">
-                            <label for="exampleFormControlInput1" class="required form-label">Jumlah Produk</label>
-                            <input type="number" class="form-control form-control-solid" wire:model="qty">
-                            @error('qty')
-                            <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div> --}}
                     </div>
 
                     <div class="modal-footer">

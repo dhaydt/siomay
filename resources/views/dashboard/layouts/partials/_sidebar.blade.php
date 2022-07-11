@@ -244,6 +244,35 @@
                     </div>
                 </div>
 
+                <div class="menu-item">
+                    <div class="menu-content pt-8 pb-2">
+                        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Form Input Data</span>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link @if($active == "Pengajuan Stock Gudang") active @endif"
+                        href="{{ route('form_stock') }}">
+                        <span class="menu-icon">
+                            <span class="svg-icon svg-icon-2">
+                                <i class="fas fa-luggage-cart"></i>
+                            </span>
+                        </span>
+                        <span class="menu-title">Pengajuan Stock Gudang</span>
+                    </a>
+                </div>
+
+                <div class="menu-item">
+                    <a class="menu-link @if($active == "Kasir") active @endif"
+                        href="{{ route('form_stock') }}">
+                        <span class="menu-icon">
+                            <span class="svg-icon svg-icon-2">
+                                <i class="fas fa-cash-register"></i>
+                            </span>
+                        </span>
+                        <span class="menu-title">Kasir</span>
+                    </a>
+                </div>
+
 
                 <div class="menu-item">
                     <div class="menu-content pt-8 pb-2">

@@ -67,4 +67,6 @@ Route::prefix('dashboard')->middleware('admin')->group(function () {
     Route::get('gudang/{status}', [GudangController::class, 'index'])->name('gudang');
     Route::get('produk', [ItemController::class, 'index'])->name('produk');
     Route::get('pengajuan/{status}', [GudangController::class, 'pengajuan_stock'])->name('pengajuan_stock');
+    Route::get('pengajuan_stock', [GudangController::class, 'form_pengajuan_stock'])->name('form_stock');
+    Route::post('post_pengajuan_stock', [GudangController::class, 'post_form_pengajuan_stock'])->name('post.pengajuan');
 });

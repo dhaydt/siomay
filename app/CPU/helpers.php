@@ -3,7 +3,9 @@
 namespace App\CPU;
 
 use App\Models\cabang;
+use App\Models\LoginLog;
 use App\Models\StockRequest;
+use App\Models\User;
 use App\Models\WebConfig;
 use Carbon\Carbon;
 
@@ -64,5 +66,16 @@ class helpers
         }
 
         return $config;
+    }
+
+    public static function getUser($token)
+    {
+        $token = LoginLog::where('token', $token)->first();
+        $user = User::find($token->user_id);
+        if ($user) {
+            return $user;
+        }
+
+        return 0;
     }
 }
