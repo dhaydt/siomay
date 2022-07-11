@@ -23,36 +23,40 @@
             </span>
         </div>
     </div>
+    @php($role = session()->get('role'))
     <div class="aside-menu flex-column-fluid">
         <div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true"
             data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto"
             data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer" data-kt-scroll-wrappers="#kt_aside_menu"
             data-kt-scroll-offset="0">
+            <div class="menu-item">
+                {{-- <a class="menu-link @if($active == " home") active @endif" href="{{ route('admin.home') }}">
+                    --}}
+                    <a class="menu-link @if($active == " dashboard") active @endif" href="{{ route('dashboard') }}">
+                        <span class="menu-icon">
+                            <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none">
+                                    <path
+                                        d="M11 2.375L2 9.575V20.575C2 21.175 2.4 21.575 3 21.575H9C9.6 21.575 10 21.175 10 20.575V14.575C10 13.975 10.4 13.575 11 13.575H13C13.6 13.575 14 13.975 14 14.575V20.575C14 21.175 14.4 21.575 15 21.575H21C21.6 21.575 22 21.175 22 20.575V9.575L13 2.375C12.4 1.875 11.6 1.875 11 2.375Z"
+                                        fill="currentColor" />
+                                </svg>
+                            </span>
+                        </span>
+                        <span class="menu-title">Dashboard</span>
+                    </a>
+            </div>
+
             <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
                 id="#kt_aside_menu" data-kt-menu="true" data-kt-menu-expand="false">
+                @if ($role == 1 || $role == 2)
+
                 <div class="menu-item">
                     <div class="menu-content pt-8 pb-2">
                         <span class="menu-section text-muted text-uppercase fs-8 ls-1">Master</span>
                     </div>
                 </div>
-                <div class="menu-item">
-                    {{-- <a class="menu-link @if($active == " home") active @endif" href="{{ route('admin.home') }}">
-                        --}}
-                        <a class="menu-link @if($active == " dashboard") active @endif" href="{{ route('dashboard') }}">
-                            <span class="menu-icon">
-                                <span class="svg-icon svg-icon-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none">
-                                        <path
-                                            d="M11 2.375L2 9.575V20.575C2 21.175 2.4 21.575 3 21.575H9C9.6 21.575 10 21.175 10 20.575V14.575C10 13.975 10.4 13.575 11 13.575H13C13.6 13.575 14 13.975 14 14.575V20.575C14 21.175 14.4 21.575 15 21.575H21C21.6 21.575 22 21.175 22 20.575V9.575L13 2.375C12.4 1.875 11.6 1.875 11 2.375Z"
-                                            fill="currentColor" />
-                                    </svg>
-                                </span>
-                            </span>
-                            <span class="menu-title">Dashboard</span>
-                        </a>
-                </div>
-                @if (session()->get('role') == 1)
+                @if ($role == 1)
                 <div class="menu-item">
                     <a class="menu-link @if($active == " Data Cabang") active @endif" href="{{ route('cabang') }}">
                         <span class="menu-icon">
@@ -137,6 +141,8 @@
                     </div>
                 </div>
 
+                @if ($role == 1)
+
                 <div class="menu-item">
                     <a class="menu-link @if($active == " Data Produk") active @endif" href="{{ route('produk') }}">
                         <span class="menu-icon">
@@ -147,6 +153,8 @@
                         <span class="menu-title">Produk</span>
                     </a>
                 </div>
+                @endif
+                @endif
 
                 <div class="menu-item">
                     <div class="menu-content pt-8 pb-2">
@@ -154,21 +162,44 @@
                     </div>
                 </div>
 
-                <div class="menu-item">
-                    <a class="menu-link @if($active == "daerah") active @endif" href="">
-                        <span class="menu-icon">
-                            <span class="svg-icon svg-icon-2">
-                                <i class="fas fa-handshake"></i>
-                            </span>
+                <div data-kt-menu-trigger="click"
+                    class="menu-item menu-accordion @if($active == 'Data Transaksi Pusat' || $active == 'Data Transaksi Cabang') show active @endif"">
+                    <span class=" menu-link @if($active=='Data Stock Gudang' || $active=='Pengajuan Stock' ) show
+                    active @endif">
+                    <span class="menu-icon">
+                        <span class="svg-icon svg-icon-2">
+                            <i class="fas fa-handshake"></i>
                         </span>
-                        <span class="menu-title">Penjualan</span>
-                    </a>
+                    </span>
+                    <span class="menu-title">Data Penjualan</span>
+                    <span class="menu-arrow"></span>
+                    </span>
+                    <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-item">
+                            <a class="menu-link @if($active == "Data Transaksi Pusat") active @endif"
+                                href="{{ route('transaction', ['cabang' => 'cabang?cabang=pusat']) }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Penjualan Pusat</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link @if($active == 'Data Transaksi Cabang') active @endif"
+                                href="{{ route('transaction', ['cabang' => 'cabang?cabang=cabang']) }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Penjualan Cabang</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 <div data-kt-menu-trigger="click"
                     class="menu-item menu-accordion @if($active == 'Data Stock Gudang Pusat' || $active == 'Data Stock Gudang Cabang') show active @endif"">
-                    <span class=" menu-link @if($active=='Data Stock Gudang' || $active=='Pengajuan Stock' ) show active
-                    @endif">
+                    <span class=" menu-link @if($active=='Data Stock Gudang' || $active=='Pengajuan Stock' ) show
+                    active @endif">
                     <span class="menu-icon">
                         <span class="svg-icon svg-icon-2">
                             <i class="fas fa-warehouse"></i>
@@ -178,6 +209,7 @@
                     <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion">
+                        @if ($role == 1)
                         <div class="menu-item">
                             <a class="menu-link @if($active == "Data Stock Gudang Pusat") active @endif"
                                 href="{{ route('gudang', ['status' => 'status?status=pusat']) }}">
@@ -187,6 +219,7 @@
                                 <span class="menu-title">Gudang Pusat</span>
                             </a>
                         </div>
+                        @endif
                         <div class="menu-item">
                             <a class="menu-link @if($active == 'Data Stock Gudang Cabang') active @endif"
                                 href="{{ route('gudang', ['status' => 'status?status=cabang']) }}">
@@ -201,8 +234,8 @@
 
                 <div data-kt-menu-trigger="click"
                     class="menu-item menu-accordion @if($active == 'Pengajuan Stock Baru' || $active == 'Pengajuan Stock Dikirim' || $active == 'Pengajuan Stock Diterima') show active @endif"">
-                    <span class=" menu-link @if($active=='Pengajuan Stock Diterima' || $active=='Pengajuan Stock Dikirim' || $active == 'Pengajuan Stock Baru' ) show active
-                    @endif">
+                    <span class=" menu-link @if($active=='Pengajuan Stock Diterima' ||
+                    $active=='Pengajuan Stock Dikirim' || $active=='Pengajuan Stock Baru' ) show active @endif">
                     <span class="menu-icon">
                         <span class="svg-icon svg-icon-2">
                             <i class="fas fa-dolly"></i>
@@ -250,7 +283,7 @@
                     </div>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link @if($active == "Pengajuan Stock Gudang") active @endif"
+                    <a class="menu-link @if($active == " Pengajuan Stock Gudang") active @endif"
                         href="{{ route('form_stock') }}">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
@@ -262,8 +295,7 @@
                 </div>
 
                 <div class="menu-item">
-                    <a class="menu-link @if($active == "Kasir") active @endif"
-                        href="{{ route('form_stock') }}">
+                    <a class="menu-link @if($active == " Kasir") active @endif" href="{{ route('form_stock') }}">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
                                 <i class="fas fa-cash-register"></i>
@@ -280,7 +312,7 @@
                     </div>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link @if($active == "Pengaturan Website") active @endif"
+                    <a class="menu-link @if($active == " Pengaturan Website") active @endif"
                         href="{{ route('config') }}">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">

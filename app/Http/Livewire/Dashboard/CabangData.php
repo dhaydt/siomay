@@ -48,6 +48,7 @@ class CabangData extends Component
         })->paginate($this->total_show);
 
         $data['cabang'] = $this->cabang;
+        dd($data);
 
         $this->dispatchBrowserEvent('contentChange');
 

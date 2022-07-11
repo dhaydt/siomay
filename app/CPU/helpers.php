@@ -3,8 +3,10 @@
 namespace App\CPU;
 
 use App\Models\cabang;
+use App\Models\item;
 use App\Models\LoginLog;
 use App\Models\StockRequest;
+use App\Models\transaction;
 use App\Models\User;
 use App\Models\WebConfig;
 use Carbon\Carbon;
@@ -18,10 +20,25 @@ class helpers
         return $cabang_id;
     }
 
+    public static function price($id)
+    {
+        $item = item::find($id);
+
+        return $item->price;
+    }
+
     public static function stockRequest($cabang_id)
     {
         $number = StockRequest::whereDate('created_at', Carbon::today())->count() + 1;
         $request = $number.'/'.Carbon::today()->format('d.m.Y').'/'.$cabang_id.'/'.(100 + StockRequest::all()->count() + 1);
+
+        return $request;
+    }
+
+    public static function order_id($cabang_id)
+    {
+        $number = transaction::whereDate('created_at', Carbon::today())->count() + 1;
+        $request = $number.'/'.Carbon::today()->format('d.m.Y').'/'.$cabang_id.'/'.(100 + transaction::all()->count() + 1);
 
         return $request;
     }
@@ -71,7 +88,7 @@ class helpers
     public static function getUser($token)
     {
         $token = LoginLog::where('token', $token)->first();
-        $user = User::find($token->user_id);
+        $user = User::with('roles')->find($token->user_id);
         if ($user) {
             return $user;
         }

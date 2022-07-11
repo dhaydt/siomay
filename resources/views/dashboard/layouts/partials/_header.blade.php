@@ -1,3 +1,16 @@
+<style>
+    .user_data{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 400;
+    }
+    .user_data span{
+        font-size: 16px;
+        font-weight: 600;
+    }
+</style>
 <div id="kt_header" style="" class="header align-items-stretch">
     <div class="container-fluid d-flex align-items-stretch justify-content-between">
         <div class="d-flex align-items-center d-lg-none ms-n2 me-2" title="Show aside menu">
@@ -485,6 +498,12 @@
                         </div>
                     </div>
                 </div>
+                @php($user = App\CPU\helpers::getUser(session()->get('token')))
+                <div class="d-flex user_data">
+                    <div class="user_data me-4">
+                        Selamat datang &nbsp <span class="text-capitalize"> {{ $user->name }}</span>
+                    </div>
+                </div>
                 <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
                     <div class="cursor-pointer symbol symbol-30px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
                         <img src="{{ asset('assets/media/avatars/300-1.jpg') }}" alt="user" />
@@ -496,9 +515,9 @@
                                     <img alt="Logo" src="{{ asset('assets/media/avatars/300-1.jpg') }}" />
                                 </div>
                                 <div class="d-flex flex-column">
-                                    <div class="fw-bolder d-flex align-items-center fs-5">Max Smith
-                                    <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Pro</span></div>
-                                    <a href="#" class="fw-bold text-muted text-hover-primary fs-7">max@kt.com</a>
+                                    <div class="fw-bolder d-flex align-items-center fs-5 text-capitalize">{{ $user->name }}
+                                    <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">{{ $user->roles->role }}</span></div>
+                                    <a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{ $user->phone }}</a>
                                 </div>
                             </div>
                         </div>

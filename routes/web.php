@@ -5,6 +5,7 @@ use App\Http\Controllers\CabangController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
@@ -69,4 +70,5 @@ Route::prefix('dashboard')->middleware('admin')->group(function () {
     Route::get('pengajuan/{status}', [GudangController::class, 'pengajuan_stock'])->name('pengajuan_stock');
     Route::get('pengajuan_stock', [GudangController::class, 'form_pengajuan_stock'])->name('form_stock');
     Route::post('post_pengajuan_stock', [GudangController::class, 'post_form_pengajuan_stock'])->name('post.pengajuan');
+    Route::get('transaksi/{cabang}', [TransactionController::class, 'index'])->name('transaction');
 });
