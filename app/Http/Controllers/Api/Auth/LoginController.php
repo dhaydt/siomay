@@ -62,6 +62,7 @@ class LoginController extends Controller
             ]);
 
             return helpers::response(1, 'Login Berhasil', [
+                'userData' => $check,
                 'loginLogs' => $loginLogs,
             ]);
         }
