@@ -51,6 +51,7 @@ class LoginController extends Controller
 
             return helpers::response(1, 'Login Berhasil', [
                 'loginLogs' => $check,
+                'userData' => $admin,
             ]);
         } else {
             $loginLogs = LoginLog::create([
@@ -62,8 +63,8 @@ class LoginController extends Controller
             ]);
 
             return helpers::response(1, 'Login Berhasil', [
-                'userData' => $check,
                 'loginLogs' => $loginLogs,
+                'userData' => $admin,
             ]);
         }
     }
