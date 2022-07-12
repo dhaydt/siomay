@@ -10,6 +10,6 @@ class Transaction_detail extends Model
     use HasFactory;
 
     protected $fillable = [
-        'transaction_id', 'item_id', 'price', 'qty',
+        'transaction_id', 'item_id', 'price', 'qty', 'sub_total',
     ];
 }

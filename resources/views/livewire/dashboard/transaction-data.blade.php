@@ -61,14 +61,14 @@
                             <td class="align-middle text-center">{{ App\CPU\helpers::currency($item->order_amount)}}</td>
                             <td class="align-middle text-center">
                                 <div class="btn-group btn-group-sm" role="group">
-                                    <button type="button" wire:click.prevent="$emit('onClickUpdate', {{ $item }})"
+                                    {{-- <button type="button" wire:click.prevent="$emit('onClickUpdate', {{ $item }})"
                                         class="btn btn-sm bg-success text-white btn-hover-rotate-start"
                                         data-bs-toggle="tooltip" data-bs-placement="top"
                                         title="Ubah data {{ $item->name }}"><i
-                                            class="fas fa-edit text-light"></i></button>
-                                    <button type="button" wire:click.prevent="$emit('onClickDelete', `{{ $item->id }}`)"
+                                            class="fas fa-edit text-light"></i></button> --}}
+                                    <button type="button" wire:click.prevent="$emit('onClickDelete', `{{ $item->transaction_id }}`)"
                                         class="btn btn-sm bg-danger btn-hover-rotate-end" data-bs-toggle="tooltip"
-                                        data-bs-placement="top" title="Hapus data {{ $item->name }}"><i
+                                        data-bs-placement="top" title="Hapus data transaksi"><i
                                             class="fas fa-trash text-light"></i></button>
                                 </div>
                             </td>
@@ -141,7 +141,7 @@
                                 <!--end::Bullet-->
                                 <!--begin::Checkbox-->
                                 <div class="form-check form-check-custom form-check-solid mx-5">
-                                    <input class="form-check-input" type="checkbox" value="{{ $i->id }}"
+                                    <input class="form-check-input" type="checkbox" value="{{ $i->item_id }}"
                                         wire:model="listProduk">
                                 </div>
                                 <!--end::Checkbox-->
@@ -149,15 +149,15 @@
                                 <div class="flex-grow-1">
                                     <a href="javascript:"
                                         class="text-gray-800 text-hover-primary fw-bold fs-6 text-capitalize">{{
-                                        $i->name }}</a>
+                                        $i->items->name }}</a>
                                 </div>
                                 <!--end::Description-->
                                 <div class="flex-grow-1">
                                     <div class="input-group input-group-sm justify-content-end">
                                         <span class="input-group-text" id="inputGroup-sizing-sm">Qty</span>
                                         <input type="number" class="form-control" aria-label="Sizing example input"
-                                            aria-describedby="inputGroup-sizing-sm" wire:model="listQty.{{ $i->id }}"
-                                            id="{{ $i->id }}" @if(!in_array($i->id, $listProduk)) disabled @endif
+                                            aria-describedby="inputGroup-sizing-sm" wire:model="listQty.{{ $i->item_id }}"
+                                            id="{{ $i->item_id }}" @if(!in_array($i->item_id, $listProduk)) disabled @endif
                                         style="max-width: 150px;"/>
                                     </div>
                                 </div>
@@ -249,6 +249,7 @@
         })
 
         Livewire.on('onClickDelete', async (id) => {
+            console.log('id', id)
             const response = await alertHapus('Warning !!!', 'Anda yakin ingin menghapus data cabang ini?')
             if(response.isConfirmed == true){
                 @this.set('transaction_id', id)

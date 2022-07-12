@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Dashboard;
 
 use App\CPU\helpers;
-use App\Models\item;
+use App\Models\stock;
 use App\Models\transaction;
 use App\Models\Transaction_detail;
 use App\Models\User;
@@ -52,7 +52,6 @@ class TransactionData extends Component
 
     public function render()
     {
-        $this->user = User::find(session()->get('user_id'));
         if ($this->cabang == 'pusat') {
             $this->transaction = transaction::where('cabang_id', 'SMN1000')->where(function ($q) {
                 $q->where('transaction_id', 'LIKE', '%'.$this->search.'%')
@@ -76,8 +75,10 @@ class TransactionData extends Component
 
     public function mount($title)
     {
+        $this->user = User::find(session()->get('user_id'));
+        // dd($this->user);
         $this->title = $title;
-        $this->produk = item::get();
+        $this->produk = stock::with('items')->where('cabang_id', $this->user->cabang_id)->get();
     }
 
     public function resetInput()
@@ -92,23 +93,28 @@ class TransactionData extends Component
         $this->validate($this->rules, $this->messages);
         $id = helpers::order_id($this->user->cabang_id);
 
-        $price = 0;
+        // $price = 0;
+        $totalPrice = 0;
 
         foreach ($this->listProduk as $i) {
             $priceItem = helpers::price($i);
+            $subTotal = floatval($priceItem) * floatval($this->listQty[$i]);
             Transaction_detail::create([
                 'transaction_id' => $id,
                 'item_id' => $i,
                 'qty' => $this->listQty[$i],
                 'price' => $priceItem,
+                'sub_total' => $subTotal,
             ]);
 
-            $price += $priceItem;
+            helpers::kurangStock($this->user->cabang_id, $i, $this->listQty[$i]);
+
+            $totalPrice += $subTotal;
         }
 
         $order = transaction::create([
             'transaction_id' => $id,
-            'order_amount' => $price,
+            'order_amount' => $totalPrice,
             'cabang_id' => $this->user->cabang_id,
             'name' => $this->name,
             'wa' => $this->wa,
@@ -118,5 +124,24 @@ class TransactionData extends Component
         $this->emit('refresh');
 
         return session()->flash('success', 'Berhasil menambah transaksi baru');
+    }
+
+    public function delete()
+    {
+        $user = transaction::where('transaction_id', $this->transaction_id)->first();
+
+        if (!$user) {
+            return session()->flash('fail', 'Transaksi tidak ditemukan');
+        }
+
+        $detail = Transaction_detail::where('transaction_id', $this->transaction_id)->get();
+        foreach ($detail as $d) {
+            $d->delete();
+        }
+
+        $user->delete();
+        $this->emit('refresh');
+
+        return session()->flash('success', 'Data transaksi berhasil dihapus');
     }
 }

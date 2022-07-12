@@ -5,6 +5,7 @@ namespace App\CPU;
 use App\Models\cabang;
 use App\Models\item;
 use App\Models\LoginLog;
+use App\Models\stock;
 use App\Models\StockRequest;
 use App\Models\transaction;
 use App\Models\User;
@@ -13,6 +14,13 @@ use Carbon\Carbon;
 
 class helpers
 {
+    public static function kurangStock($cabang_id, $item_id, $qty)
+    {
+        $stock = stock::where(['cabang_id' => $cabang_id, 'item_id' => $item_id])->first();
+        $stock->qty = floatval($stock->qty) - $qty;
+        $stock->save();
+    }
+
     public static function cabangId()
     {
         $cabang_id = 'SMN'.(1000 + cabang::all()->count() + 1);
