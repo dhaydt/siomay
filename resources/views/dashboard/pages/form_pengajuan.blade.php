@@ -70,7 +70,6 @@
             }
 
             if(boxes == false){
-                console.log('check', boxes)
                 $('#qty'+ $id).attr('disabled', true);
             }
         }

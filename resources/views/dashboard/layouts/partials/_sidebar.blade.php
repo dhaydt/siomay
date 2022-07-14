@@ -175,6 +175,7 @@
                     <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion">
+                        @if ($role == 1)
                         <div class="menu-item">
                             <a class="menu-link @if($active == "Data Transaksi Pusat") active @endif"
                                 href="{{ route('transaction', ['cabang' => 'cabang?cabang=pusat']) }}">
@@ -184,6 +185,7 @@
                                 <span class="menu-title">Penjualan Pusat</span>
                             </a>
                         </div>
+                        @endif
                         <div class="menu-item">
                             <a class="menu-link @if($active == 'Data Transaksi Cabang') active @endif"
                                 href="{{ route('transaction', ['cabang' => 'cabang?cabang=cabang']) }}">
@@ -295,7 +297,7 @@
                 </div>
 
                 <div class="menu-item">
-                    <a class="menu-link @if($active == " Kasir") active @endif" href="{{ route('form_stock') }}">
+                    <a class="menu-link @if($active == "Kasir Dashboard") active @endif" href="{{ route('cashier') }}">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
                                 <i class="fas fa-cash-register"></i>

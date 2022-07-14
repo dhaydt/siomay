@@ -15,11 +15,16 @@ class transaction extends Model
     protected $primaryKey = 'transaction_id';
 
     protected $fillable = [
-        'order_items', 'order_amount', 'wa', 'transaction_id', 'name', 'cabang_id',
+        'order_items', 'order_amount', 'wa', 'transaction_id', 'name', 'cabang_id', 'user_id',
     ];
 
     public function cabangs()
     {
         return $this->belongsTo(cabang::class, 'cabang_id');
+    }
+
+    public function details()
+    {
+        return $this->hasMany(Transaction_detail::class, 'transaction_id');
     }
 }

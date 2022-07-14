@@ -28,6 +28,7 @@ class TransactionData extends Component
     public $produk;
     public $listProduk = [];
     public $listQty = [];
+    public $prices = [];
     public $user;
 
     protected $queryString = ['cabang'];
@@ -53,13 +54,13 @@ class TransactionData extends Component
     public function render()
     {
         if ($this->cabang == 'pusat') {
-            $this->transaction = transaction::where('cabang_id', 'SMN1000')->where(function ($q) {
+            $this->transaction = transaction::with('details')->where('cabang_id', 'SMN1000')->where(function ($q) {
                 $q->where('transaction_id', 'LIKE', '%'.$this->search.'%')
                 ->orWhere('name', 'LIKE', '%'.$this->search.'%');
             })->paginate($this->total_show);
         }
         if ($this->cabang == 'cabang') {
-            $this->transaction = transaction::where('cabang_id', '<>', 'SMN1000')->where(function ($q) {
+            $this->transaction = transaction::with('details')->where('cabang_id', $this->user->cabang_id)->where(function ($q) {
                 $q->where('transaction_id', 'LIKE', '%'.$this->search.'%')
                 ->orWhere('name', 'LIKE', '%'.$this->search.'%');
             })->paginate($this->total_show);
@@ -118,6 +119,7 @@ class TransactionData extends Component
             'cabang_id' => $this->user->cabang_id,
             'name' => $this->name,
             'wa' => $this->wa,
+            'user_id' => $this->user->id,
         ]);
 
         $this->resetInput();

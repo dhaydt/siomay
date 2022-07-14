@@ -27,7 +27,8 @@
                 </div>
             </div>
             <div class="table-responsive">
-                <table id="id" class="table align-items-center mb-0">
+                <table id="id"
+                    class="table table-hover table-rounded table-striped border gy-7 gs-7 align-items-center mb-0">
                     <thead>
                         <tr>
                             <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">No
@@ -39,8 +40,9 @@
                             @endif
                             <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">Nama
                             </th>
-                            <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">
-                                Rincian belanja
+                            <th
+                                class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center d-flex justify-content-between">
+                                <span>Rincian belanja</span> <strong>: Jumlah</strong>
                             </th>
                             <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">
                                 Total belanja
@@ -55,10 +57,21 @@
                         @foreach ($transaction as $i => $item)
                         <tr>
                             <td class="align-middle text-center">{{ ($page - 1) * $total_show + $i +1 }}</td>
-                            <td class="align-middle text-center text-capitalize">{{ $item->name}}</td>
+                            @if (session()->get('role') == 1)
                             <td class="align-middle text-center">{{ $item->cabangs->name}}</td>
-                            <td class="align-middle text-center">produk</td>
-                            <td class="align-middle text-center">{{ App\CPU\helpers::currency($item->order_amount)}}</td>
+                            @endif
+                            <td class="align-middle text-center text-capitalize">{{ $item->name}}</td>
+                            <td class="align-middle text-center">
+                                @foreach ($item->details as $stok)
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="badge badge-primary">{{ $stok->products->name }}</span>
+                                    <strong>: {{ $stok->qty }}</strong>
+                                </div>
+                                <hr>
+                                @endforeach
+                            </td>
+                            <td class="align-middle text-center">{{ App\CPU\helpers::currency($item->order_amount)}}
+                            </td>
                             <td class="align-middle text-center">
                                 <div class="btn-group btn-group-sm" role="group">
                                     {{-- <button type="button" wire:click.prevent="$emit('onClickUpdate', {{ $item }})"
@@ -66,7 +79,8 @@
                                         data-bs-toggle="tooltip" data-bs-placement="top"
                                         title="Ubah data {{ $item->name }}"><i
                                             class="fas fa-edit text-light"></i></button> --}}
-                                    <button type="button" wire:click.prevent="$emit('onClickDelete', `{{ $item->transaction_id }}`)"
+                                    <button type="button"
+                                        wire:click.prevent="$emit('onClickDelete', `{{ $item->transaction_id }}`)"
                                         class="btn btn-sm bg-danger btn-hover-rotate-end" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Hapus data transaksi"><i
                                             class="fas fa-trash text-light"></i></button>
@@ -128,45 +142,49 @@
                         </div>
                         <div class="mb-10">
                             @php
-                        $color = [
-                        'success', 'info', 'warning', 'danger'
-                        ];
-                        @endphp
-                        <div class="mb-10">
-                            <label for="hakAkses" class="required form-label">Produk</label>
-                            @foreach ($produk as $key => $i)
-                            <div class="d-flex align-items-center mb-8">
-                                <!--begin::Bullet-->
-                                <span class="bullet bullet-vertical h-40px bg-{{ $color[$key] }}"></span>
-                                <!--end::Bullet-->
-                                <!--begin::Checkbox-->
-                                <div class="form-check form-check-custom form-check-solid mx-5">
-                                    <input class="form-check-input" type="checkbox" value="{{ $i->item_id }}"
-                                        wire:model="listProduk">
-                                </div>
-                                <!--end::Checkbox-->
-                                <!--begin::Description-->
-                                <div class="flex-grow-1">
-                                    <a href="javascript:"
-                                        class="text-gray-800 text-hover-primary fw-bold fs-6 text-capitalize">{{
-                                        $i->items->name }}</a>
-                                </div>
-                                <!--end::Description-->
-                                <div class="flex-grow-1">
-                                    <div class="input-group input-group-sm justify-content-end">
-                                        <span class="input-group-text" id="inputGroup-sizing-sm">Qty</span>
-                                        <input type="number" class="form-control" aria-label="Sizing example input"
-                                            aria-describedby="inputGroup-sizing-sm" wire:model="listQty.{{ $i->item_id }}"
-                                            id="{{ $i->item_id }}" @if(!in_array($i->item_id, $listProduk)) disabled @endif
-                                        style="max-width: 150px;"/>
+                            $color = [
+                            'success', 'info', 'warning', 'danger'
+                            ];
+                            @endphp
+                            <div class="mb-10">
+                                <label for="hakAkses" class="required form-label">Produk</label>
+                                @foreach ($produk as $key => $i)
+                                <div class="d-flex align-items-center mb-8">
+                                    <!--begin::Bullet-->
+                                    <span class="bullet bullet-vertical h-40px bg-{{ $color[$key] }}"></span>
+                                    <!--end::Bullet-->
+                                    <!--begin::Checkbox-->
+                                    <div class="form-check form-check-custom form-check-solid mx-5">
+                                        <input class="form-check-input" type="checkbox" value="{{ $i->item_id }}"
+                                            wire:model="listProduk">
+                                    </div>
+                                    <!--end::Checkbox-->
+                                    <!--begin::Description-->
+                                    <div class="flex-grow-1">
+                                        <a href="javascript:"
+                                            class="text-gray-800 text-hover-primary fw-bold fs-6 text-capitalize">{{
+                                            $i->items->name }}</a>
+                                    </div>
+                                    <!--end::Description-->
+                                    <div class="flex-grow-1">
+                                        <div class="input-group input-group-sm justify-content-end">
+                                            <span class="input-group-text" id="inputGroup-sizing-sm">Qty</span>
+                                            <input type="number" class="form-control" aria-label="Sizing example input"
+                                                aria-describedby="inputGroup-sizing-sm"
+                                                wire:model="listQty.{{ $i->item_id }}" id="{{ $i->item_id }}"
+                                                @if(!in_array($i->item_id, $listProduk)) disabled @endif
+                                            style="max-width: 150px;"/>
+                                        </div>
                                     </div>
                                 </div>
+                                @endforeach
+                                @error('listQty')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
-                            @endforeach
-                            @error('item')
-                            <small class="text-danger">{{ $message }}</small>
-                            @enderror
                         </div>
+                        <div class="total d-none">
+                            <h5 class=" d-flex justify-content-between">Total belanja : <span id="total" class="badge badge-success bg-success fs-6">Rp. 20000</span></h5>
                         </div>
                     </div>
 
