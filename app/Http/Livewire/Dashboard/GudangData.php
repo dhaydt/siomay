@@ -50,7 +50,7 @@ class GudangData extends Component
     public function render()
     {
         if ($this->status == 'pusat') {
-            $this->gudang = stock::with('cabangs', 'logs', 'items')->where('cabang_id', 'SMN1000')->orderBy('updated_at', 'DESC')->paginate($this->total_show);
+            $this->gudang = stock::with('cabangs', 'logs', 'items')->where('cabang_id', 'SMN1000')->orderBy('created_at', 'DESC')->paginate($this->total_show);
         }
 
         if ($this->status == 'cabang') {
@@ -60,7 +60,7 @@ class GudangData extends Component
                     ->orWhere('address', 'LIKE', '%'.$this->search.'%');
                 })->orderBy('cabang_id', 'ASC')->paginate($this->total_show);
             } else {
-                $this->gudang = stock::with('cabangs', 'logs', 'items')->where('cabang_id', '<>', 'SMN1000')->orderBy('updated_at', 'DESC')->paginate($this->total_show);
+                $this->gudang = stock::with('cabangs', 'logs', 'items')->where('cabang_id', '<>', 'SMN1000')->orderBy('created_at', 'DESC')->paginate($this->total_show);
             }
         }
 

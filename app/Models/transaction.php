@@ -27,4 +27,9 @@ class transaction extends Model
     {
         return $this->hasMany(Transaction_detail::class, 'transaction_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -54,16 +54,32 @@ class TransactionData extends Component
     public function render()
     {
         if ($this->cabang == 'pusat') {
-            $this->transaction = transaction::with('details')->where('cabang_id', 'SMN1000')->where(function ($q) {
+            $this->transaction = transaction::with('details', 'user')->where('cabang_id', 'SMN1000')->where(function ($q) {
                 $q->where('transaction_id', 'LIKE', '%'.$this->search.'%')
-                ->orWhere('name', 'LIKE', '%'.$this->search.'%');
-            })->paginate($this->total_show);
+                ->orWhere('name', 'LIKE', '%'.$this->search.'%')
+                ->orWhereHas('user', function ($u) {
+                    $u->where('name', 'LIKE', '%'.$this->search.'%');
+                });
+            })->orderBy('created_at', 'desc')->paginate($this->total_show);
         }
         if ($this->cabang == 'cabang') {
-            $this->transaction = transaction::with('details')->where('cabang_id', $this->user->cabang_id)->where(function ($q) {
-                $q->where('transaction_id', 'LIKE', '%'.$this->search.'%')
-                ->orWhere('name', 'LIKE', '%'.$this->search.'%');
-            })->paginate($this->total_show);
+            if (session()->get('role') == 1) {
+                $this->transaction = transaction::with('details', 'user')->where('cabang_id', '<>', 'SMN1000')->where(function ($q) {
+                    $q->where('transaction_id', 'LIKE', '%'.$this->search.'%')
+                    ->orWhere('name', 'LIKE', '%'.$this->search.'%')
+                    ->orWhereHas('user', function ($u) {
+                        $u->where('name', 'LIKE', '%'.$this->search.'%');
+                    });
+                })->orderBy('created_at', 'desc')->paginate($this->total_show);
+            } elseif (session()->get('role') == 2) {
+                $this->transaction = transaction::with('details', 'user')->where('cabang_id', $this->user->cabang_id)->where(function ($q) {
+                    $q->where('transaction_id', 'LIKE', '%'.$this->search.'%')
+                    ->orWhere('name', 'LIKE', '%'.$this->search.'%')
+                    ->orWhereHas('user', function ($u) {
+                        $u->where('name', 'LIKE', '%'.$this->search.'%');
+                    });
+                })->orderBy('created_at', 'desc')->paginate($this->total_show);
+            }
         }
 
         $data['transaction'] = $this->transaction;

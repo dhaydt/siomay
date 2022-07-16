@@ -48,6 +48,9 @@
                                 Total belanja
                             </th>
                             <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">
+                                Kasir
+                            </th>
+                            <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">
                                 Aksi
                             </th>
                         </tr>
@@ -71,6 +74,12 @@
                                 @endforeach
                             </td>
                             <td class="align-middle text-center">{{ App\CPU\helpers::currency($item->order_amount)}}
+                            <td class="align-middle text-center text-capitalize">
+                                @if ($item->user)
+                                    {{ $item->user->name}}
+                                @else
+                                    <span class="badge badge-danger">Data kasir tidak ditemukan</span>
+                                @endif
                             </td>
                             <td class="align-middle text-center">
                                 <div class="btn-group btn-group-sm" role="group">

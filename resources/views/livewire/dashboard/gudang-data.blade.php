@@ -36,10 +36,10 @@
                             <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">No
                             </th>
                             <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">
-                                Cabang
+                                Produk
                             </th>
                             <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">
-                                Produk
+                                Cabang
                             </th>
                             <th class="text-uppercase text-sm text-dark font-weight-bolder opacity-75 text-center">
                                 Jumlah
@@ -54,8 +54,8 @@
                         @foreach ($gudang as $i => $item)
                         <tr>
                             <td class="align-middle text-center">{{ ($page - 1) * $total_show + $i +1 }}</td>
+                            <td class="align-middle text-center text-uppercase">{{ $item->items->name}}</td>
                             <td class="align-middle text-center text-capitalize">{{ $item->cabangs->name}}</td>
-                            <td class="align-middle text-center">{{ $item->items->name}}</td>
                             <td class="align-middle text-center">{{ $item->qty}}</td>
                             <td class="align-middle text-center">
                                 <div class="btn-group btn-group-sm" role="group">
