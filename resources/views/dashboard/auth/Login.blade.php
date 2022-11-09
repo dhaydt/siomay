@@ -36,7 +36,7 @@
                     class="navbar navbar-expand-lg blur border-radius-xl top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
                     <div class="container-fluid ps-2 pe-0">
                         <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="#">
-                            <img src="{{ $web_config ? asset($web_config['web_logo']) : asset('assets/images/logo/masnur.png') }}" alt="" class="header-logo"> Siomay Mas Nur Manajemen Sistem
+                            <img src="{{ $web_config ? asset($web_config['web_logo']) : asset('assets/images/logo/masnur.png') }}" alt="" class="header-logo"> Admin Dashboard
                         </a>
                         <button class="d-none navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
