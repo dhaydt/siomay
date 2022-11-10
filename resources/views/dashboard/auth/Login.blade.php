@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/img/apple-icon.png') }}">
-    <link rel="icon" type="image/png" href="{{ asset('assets/images/logo/masnur.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/img/web.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/web.png') }}">
     <title>
         Poin Of Sales
     </title>
@@ -63,12 +63,12 @@
                 <div class="container">
                     <div class="row align-items-center justify-content-lg-between">
                         <div class="col-12 col-md-6 my-auto">
-                            <div class="copyright text-center text-sm text-white text-lg-start">
+                            {{-- <div class="copyright text-center text-sm text-white text-lg-start">
                                 © <script>
                                     document.write(new Date().getFullYear())
                                 </script>,
-                                siomaymasnur.com
-                            </div>
+                                dutaduniadata.id
+                            </div> --}}
                         </div>
                     </div>
                 </div>

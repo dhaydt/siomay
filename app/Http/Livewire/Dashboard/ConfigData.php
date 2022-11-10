@@ -54,7 +54,7 @@ class ConfigData extends Component
 
     public function update()
     {
-        $this->validate($this->rules, $this->messages);
+        // $this->validate($this->rules, $this->messages);
         // WebConfig::updateOrInsert(['name' => 'web_name'], ['value' => $this->web_name]);
         $oldName = WebConfig::where('name', 'web_name')->first();
         $oldName->value = $this->web_name;

@@ -4,18 +4,18 @@
 
 <head>
     {{-- <title>{{ $title ? $title : '' }} | {{ $web_config['web_name'] ? $web_config['web_name'] : 'Siomay' }} --}}
-    <title>{{ $title ? $title : '' }} | {{ $web_config ? $web_config['web_name'] : 'Siomay' }}
+    <title>{{ $title ? $title : '' }} | {{ $web_config ? $web_config['web_name'] : '' }}
     </title>
     <meta charset="utf-8" />
-    <meta name="description" content="siomay mas nur" />
-    <meta name="keywords" content="siomay mas nur" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="siomay mas nur" />
+    <meta property="og:title" content="" />
     <meta property="og:url" content="" />
     <link rel="canonical" href="" />
-    <link rel="shortcut icon" href="{{ asset('/assets/images/logo/masnur.png') }}" />
+    <link rel="shortcut icon" href="{{ asset('/assets/img/web.png') }}" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <link href="{{ asset('/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet"
         type="text/css" />
@@ -84,7 +84,7 @@
                         class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
                         <div class="text-dark order-2 order-md-1">
                             <span class="text-muted fw-bold me-1">2022©</span>
-                            <a href="#" class="text-gray-800 text-hover-primary">siomaymasnur.com</a>
+                            {{-- <a href="#" class="text-gray-800 text-hover-primary">siomaymasnur.com</a> --}}
                         </div>
                         <ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">
                             <li class="menu-item">

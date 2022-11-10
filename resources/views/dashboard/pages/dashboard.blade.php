@@ -4,7 +4,7 @@
     <div class="card shadow-sm">
         <div class="card-header">
             <div class="card-title">
-                Beranda Dashboard Siomay Mas Nur
+                Beranda Dashboard
             </div>
             {{-- <div class="card-toolbar">
                 <button class="btn btn-primary btn-tambah-layanan" data-bs-toggle="tooltip" data-bs-placement="top"
